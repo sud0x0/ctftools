@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8dGV4dCB5PSI5MCIgZm9udC1zaXplPSI5NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iNTAiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZmlsbD0iIzMzRkYzMyI+JiM5ODIyOzwvdGV4dD4KPC9zdmc+">
+    <meta name="color-scheme" content="dark">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUD0X0 - CTFTools | Payloads</title>
+    <!-- SEO -->
+    <meta name="description" content="Reverse shell payloads, msfvenom commands and web shells with dynamic attacker IP and port substitution.">
+    <meta name="author" content="sud0x0">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sud0x0.github.io/ctftools/pages/payloads.html">
+    <meta property="og:title" content="SUD0X0 - CTFTools | Payloads">
+    <meta property="og:description" content="Reverse shell payloads, msfvenom commands and web shells with dynamic attacker IP and port substitution.">
+    <meta property="og:site_name" content="SUD0X0 CTFTools">
+    <link rel="stylesheet" href="../assets/shared.css">
+    <style>
+        /* Two-field attacker bar */
+        .attacker-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px 16px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .attacker-bar .field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 180px;
+        }
+        .attacker-bar label {
+            color: var(--green);
+            font-size: 11px;
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+        .attacker-bar input {
+            flex: 1;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--green);
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            padding: 7px 12px;
+            border-radius: 3px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .attacker-bar input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 2px rgba(51,255,51,0.1);
+        }
+        .attacker-bar .divider {
+            width: 1px;
+            height: 28px;
+            background: var(--border);
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+    <a href="../index.html">Recon</a>
+    <a href="misc.html">Misc</a>
+    <a href="payloads.html">Payloads</a>
+    <a href="linux-privesc.html">Linux Priv E</a>
+    <a href="windows-privesc.html">Windows Priv E</a>
+    <a href="ad-attacks.html">AD Attacks</a>
+</nav>
+
+<div class="layout">
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">SUD0<span>X0</span></div>
+            <div class="sidebar-subtitle"></div>
+        </div>
+        <div class="sidebar-groups"></div></nav>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="page-title"></div>
+        </div>
+
+        <!-- Attacker IP + PORT input -->
+        <div class="attacker-bar">
+            <div class="field">
+                <label>YOUR IP</label>
+                <input type="text" id="attackerIp" placeholder="10.10.14.1" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="divider"></div>
+            <div class="field">
+                <label>PORT</label>
+                <input type="text" id="attackerPort" placeholder="4444" autocomplete="off" spellcheck="false" style="max-width:100px;">
+            </div>
+        </div>
+
+        <div id="sections-container"></div>
+    </div>
+</div>
+
+<script src="../assets/shared.js"></script>
+<script>
+    loadPage('../data/payloads.md');
+
+    // Hook attacker inputs into sessionStorage after page renders
+    const _origRender = renderPage;
+    renderPage = function(data) {
+        _origRender(data);
+        initAttackerInputs();
+    };
+
+    function initAttackerInputs() {
+        const ipInput   = document.getElementById('attackerIp');
+        const portInput = document.getElementById('attackerPort');
+        if (!ipInput || !portInput) return;
+
+        // Pre-fill from session
+        ipInput.value   = getSession('ctf_attacker_ip',   '');
+        portInput.value = getSession('ctf_attacker_port', '');
+        applySessionVars();
+
+        ipInput.addEventListener('input', function() {
+            setSession('ctf_attacker_ip', escapeHtml(this.value.trim()));
+            applySessionVars();
+        });
+        portInput.addEventListener('input', function() {
+            setSession('ctf_attacker_port', escapeHtml(this.value.trim()));
+            applySessionVars();
+        });
+    }
+</script>
+</body>
+</html>

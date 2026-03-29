@@ -1,0 +1,294 @@
+:root {
+    color-scheme: dark;
+    --green:        #33FF33;
+    --green-dim:    #29CC29;
+    --green-dark:   #0d4d1a;
+    --bg:           #333333;
+    --bg2:          #1a1a1a;
+    --bg3:          #0a0a0a;
+    --border:       #444444;
+    --text:         #33FF33;
+    --text-dim:     #29CC29;
+    --red:          #ff4444;
+    --yellow:       #ffcc00;
+    --blue:         #44aaff;
+    --purple:       #cc66ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Courier New', monospace;
+    background-color: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-size: 16px;
+}
+
+/* ── Top nav ── */
+.top-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 42px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 4px;
+    z-index: 1000;
+}
+.top-nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 5px 14px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+.top-nav a:hover { color: var(--green); border-color: var(--border); }
+.top-nav a.active {
+    color: var(--green);
+    border-color: var(--green-dim);
+    background: rgba(51,255,51,0.05);
+}
+
+/* ── Layout ── */
+.layout {
+    display: flex;
+    margin-top: 42px;
+    flex: 1;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 42px;
+    height: calc(100vh - 42px);
+    overflow-y: auto;
+    padding: 20px 0;
+    flex-shrink: 0;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: var(--bg); }
+.sidebar::-webkit-scrollbar-thumb { background: var(--green-dark); border-radius: 2px; }
+
+.sidebar-header {
+    padding: 0 16px 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+}
+.sidebar-logo { display: none; }
+.sidebar-logo span { display: none; }
+.sidebar-subtitle { font-size: 20px; color: var(--green); margin-top: 2px; letter-spacing: 2px; font-weight: 700; }
+
+.sidebar-group-label {
+    padding: 6px 16px;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+}
+.sidebar ul { list-style: none; }
+.sidebar li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+}
+.sidebar li a:hover { color: var(--green); background: rgba(51,255,51,0.04); border-left-color: var(--green-dim); }
+.sidebar li a.active { color: var(--green); background: rgba(51,255,51,0.07); border-left-color: var(--green); }
+.port-badge {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-dim);
+    background: var(--bg3);
+    padding: 1px 5px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+}
+
+/* ── Main content ── */
+.container {
+    flex: 1;
+    max-width: 1100px;
+    padding: 30px 36px;
+    min-width: 0;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    flex: 1;
+}
+.page-title span { color: var(--text-dim); }
+
+/* ── IP bar (recon page only) ── */
+.ip-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 16px;
+    margin-bottom: 28px;
+}
+.ip-bar label { color: var(--green); font-size: 11px; letter-spacing: 2px; white-space: nowrap; }
+.ip-bar input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--green);
+    font-family: 'Courier New', monospace;
+    font-size: 15px;
+    padding: 7px 12px;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.ip-bar input:focus { border-color: var(--green); box-shadow: 0 0 0 2px rgba(51,255,51,0.1); }
+.ip-indicator { width: 8px; height: 8px; border-radius: 50%; background: var(--text-dim); transition: background 0.3s; flex-shrink: 0; }
+.ip-indicator.active { background: var(--green); box-shadow: 0 0 8px var(--green); }
+
+/* ── Sections ── */
+.section {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+}
+.section-header:hover { background: #1e1e1e; }
+.section-icon { font-size: 12px; color: var(--green); width: 20px; text-align: center; }
+.section-title { font-size: 20px; font-weight: 700; color: var(--green); letter-spacing: 2px; flex: 1; }
+.section-port { font-size: 12px; color: var(--text-dim); background: var(--bg); border: 1px solid var(--border); padding: 2px 8px; border-radius: 3px; }
+.section-toggle { color: var(--text-dim); font-size: 10px; transition: transform 0.2s; }
+.section-toggle.open { transform: rotate(90deg); }
+.section-body { padding: 18px 20px; display: none; }
+.section-body.open { display: block; }
+
+/* ── Subsections ── */
+.subsection { margin-bottom: 18px; }
+.subsection:last-child { margin-bottom: 0; }
+.subsection-title {
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.subsection-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── Code blocks ── */
+.code-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 8px;
+    position: relative;
+}
+.code-block:last-child { margin-bottom: 0; }
+.code-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
+}
+.code-meta-tool { font-size: 13px; color: var(--yellow); letter-spacing: 1px; }
+.code-meta-desc { font-size: 13px; color: var(--text-dim); flex: 1; }
+.copy-btn {
+    background: var(--bg3);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    cursor: pointer;
+    border-radius: 2px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+}
+.copy-btn:hover { color: var(--green); border-color: var(--green); }
+.copy-btn.copied { color: var(--green); border-color: var(--green); }
+.code-block pre {
+    padding: 12px 14px;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-all;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+/* ── Notes & Tags ── */
+.note {
+    font-size: 13px;
+    color: var(--text-dim);
+    background: rgba(51,255,51,0.03);
+    border: 1px solid rgba(51,255,51,0.08);
+    border-radius: 3px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    line-height: 1.6;
+}
+.note a { color: var(--green-dim); }
+.tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+.tag-crit { background: rgba(255,68,68,0.15); color: var(--red); border: 1px solid rgba(255,68,68,0.3); }
+.tag-info { background: rgba(68,170,255,0.1); color: var(--blue); border: 1px solid rgba(68,170,255,0.2); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--green-dark); }
+

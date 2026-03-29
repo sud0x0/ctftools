@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="dark">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUD0X0 - CTFTools | Penetration Testing & CTF Reference</title>
+
+    <!-- SEO -->
+    <meta name="description"
+        content="A personal CTF reference toolkit by sud0x0. Covers recon, service enumeration, privilege escalation, Active Directory attacks, and more.">
+    <meta name="keywords"
+        content="CTF, penetration testing, pentest, recon, nmap, nxc, netexec, impacket, privilege escalation, active directory, kerberoasting, linux privesc, windows privesc">
+    <meta name="author" content="sud0x0">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sud0x0.github.io/ctftools/">
+
+    <!-- Open Graph (social sharing) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SUD0X0 - CTFTools">
+    <meta property="og:description"
+        content="Personal CTF and penetration testing reference toolkit. Recon, privesc, AD attacks and more — all in one place.">
+    <meta property="og:url" content="https://sud0x0.github.io/ctftools/">
+    <meta property="og:site_name" content="SUD0X0 CTFTools">
+
+    <link rel="stylesheet" href="assets/shared.css">
+    <style>
+        .hero {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            line-height: 1.8;
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .hero p:last-child {
+            margin-bottom: 0;
+        }
+
+        .hero a {
+            color: var(--green-dim);
+            text-decoration: none;
+        }
+
+        .hero a:hover {
+            color: var(--green);
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 14px;
+        }
+
+        .hero-tag {
+            font-size: 11px;
+            color: var(--text-dim);
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            padding: 2px 8px;
+            border-radius: 2px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ── TOP NAV ── -->
+    <nav class="top-nav">
+        <a href="index.html">Recon</a>
+        <a href="pages/misc.html">Misc</a>
+        <a href="pages/payloads.html">Payloads</a>
+        <a href="pages/linux-privesc.html">Linux Priv E</a>
+        <a href="pages/windows-privesc.html">Windows Priv E</a>
+        <a href="pages/ad-attacks.html">AD Attacks</a>
+    </nav>
+
+    <div class="layout">
+
+        <!-- ── SIDEBAR ── -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">SUD0<span>X0</span></div>
+                <div class="sidebar-subtitle">SUD0X0 - CTFTools</div>
+            </div>
+            <!-- Populated by JS from JSON -->
+            <div class="sidebar-groups"></div>
+        </nav>
+
+        <!-- ── MAIN ── -->
+        <div class="container">
+
+            <div class="page-header">
+                <div class="page-title">CTF <span>/ RECON TOOLKIT</span></div>
+            </div>
+
+            <!-- Front page description -->
+            <div class="hero">
+                <p>
+                    A personal reference toolkit for CTF competitions and penetration testing.
+                    Commands are grouped by service and attack phase — enter a target IP above
+                    and it will populate across all commands automatically.
+                </p>
+                <p>
+                    Built around <a href="https://nmap.org" target="_blank">nmap</a>,
+                    <a href="https://www.netexec.wiki" target="_blank">netexec (nxc)</a>, and
+                    <a href="https://github.com/fortra/impacket" target="_blank">impacket</a> as primary tools.
+                    Use the top nav to switch between recon, privilege escalation, and AD attack references.
+                    Source on <a href="https://github.com/sud0x0/ctftools" target="_blank">GitHub</a>.
+                </p>
+                <div class="hero-tags">
+                    <span class="hero-tag">nmap</span>
+                    <span class="hero-tag">nxc</span>
+                    <span class="hero-tag">impacket</span>
+                    <span class="hero-tag">ffuf</span>
+                    <span class="hero-tag">hydra</span>
+                    <span class="hero-tag">hashcat</span>
+                    <span class="hero-tag">john</span>
+                    <span class="hero-tag">evil-winrm</span>
+                    <span class="hero-tag">kerberoasting</span>
+                    <span class="hero-tag">bloodhound</span>
+                </div>
+            </div>
+
+            <!-- IP Input — only on recon page -->
+            <div class="ip-bar">
+                <label>TARGET IP</label>
+                <input type="text" id="targetIp" placeholder="10.10.10.1" autocomplete="off" spellcheck="false">
+                <div class="ip-indicator" id="ipIndicator"></div>
+            </div>
+
+            <!-- All section content rendered here by JS -->
+            <div id="sections-container"></div>
+
+        </div>
+    </div>
+
+    <script src="assets/shared.js"></script>
+    <script>
+        loadPage('data/recon.md');
+    </script>
+</body>
+
+</html>
